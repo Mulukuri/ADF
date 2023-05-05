@@ -1,0 +1,131 @@
+{
+	"name": "Insurance flow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText12",
+						"type": "DatasetReference"
+					},
+					"name": "DSInsurance"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink5"
+				}
+			],
+			"transformations": [
+				{
+					"name": "southeast"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          age as string,",
+				"          sex as string,",
+				"          bmi as string,",
+				"          children as string,",
+				"          smoker as string,",
+				"          region as string,",
+				"          charges as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DSInsurance",
+				"DSInsurance split(equals(region, 'southeast'),",
+				"     equals(region, 'northeast'),",
+				"     equals(region, 'southwest'),",
+				"     equals(region, 'Northwest'),",
+				"     disjoint: false) ~> southeast@(Southeast, Northeast, Southwest, Northwest)",
+				"southeast@Southeast sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Age as string,",
+				"          Sex as string,",
+				"          BP as string,",
+				"          Cholesterol as string,",
+				"          NAK as string,",
+				"          Drug as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"southeast@Northeast sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Age as string,",
+				"          Sex as string,",
+				"          BP as string,",
+				"          Cholesterol as string,",
+				"          NAK as string,",
+				"          Drug as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2",
+				"southeast@Southwest sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Age as string,",
+				"          Sex as string,",
+				"          BP as string,",
+				"          Cholesterol as string,",
+				"          NAK as string,",
+				"          Drug as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink3",
+				"southeast@Northwest sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Age as string,",
+				"          Sex as string,",
+				"          BP as string,",
+				"          Cholesterol as string,",
+				"          NAK as string,",
+				"          Drug as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink5"
+			]
+		}
+	}
+}

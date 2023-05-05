@@ -1,0 +1,164 @@
+{
+	"name": "zomatodataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Zomato",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText13",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable4",
+						"type": "DatasetReference"
+					},
+					"name": "finalflatfile"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "updatedvote"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "ranking"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Restaurant ID} as string,",
+				"          {Restaurant Name} as string,",
+				"          cc as string,",
+				"          City as string,",
+				"          Address as string,",
+				"          Locality as string,",
+				"          {Locality Verbose} as string,",
+				"          Longitude as string,",
+				"          Latitude as string,",
+				"          Cuisines as string,",
+				"          {Average Cost for two} as string,",
+				"          Currency as string,",
+				"          {Has Table booking} as string,",
+				"          {Has Online delivery} as string,",
+				"          {Is delivering now} as string,",
+				"          {Switch to order menu} as string,",
+				"          {Price range} as string,",
+				"          {Aggregate rating} as string,",
+				"          {Rating color} as string,",
+				"          {Rating text} as string,",
+				"          Votes as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          cc as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 join(source1@cc == source2@cc,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Join1",
+				"Join1 select(mapColumn(",
+				"          {Restaurant ID},",
+				"          {Restaurant Name},",
+				"          cc = source1@cc,",
+				"          City,",
+				"          Address,",
+				"          Locality,",
+				"          {Locality Verbose},",
+				"          Longitude,",
+				"          Latitude,",
+				"          Cuisines,",
+				"          {Average Cost for two},",
+				"          Currency,",
+				"          {Has Table booking},",
+				"          {Has Online delivery},",
+				"          {Is delivering now},",
+				"          {Switch to order menu},",
+				"          {Price range},",
+				"          {Aggregate rating},",
+				"          {Rating color},",
+				"          {Rating text},",
+				"          Votes,",
+				"          cc = source2@cc,",
+				"          Country",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 cast(output(",
+				"          Votes as integer",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 derive({updated votes} = coalesce(Votes,0)) ~> updatedvote",
+				"updatedvote select(mapColumn(",
+				"          {Restaurant ID},",
+				"          {Restaurant Name},",
+				"          cc,",
+				"          City,",
+				"          Address,",
+				"          Locality,",
+				"          {Locality Verbose},",
+				"          Longitude,",
+				"          Latitude,",
+				"          Cuisines,",
+				"          {Average Cost for two},",
+				"          Currency,",
+				"          {Has Table booking},",
+				"          {Has Online delivery},",
+				"          {Is delivering now},",
+				"          {Switch to order menu},",
+				"          {Price range},",
+				"          {Aggregate rating},",
+				"          {Rating color},",
+				"          {Rating text},",
+				"          Votes,",
+				"          Country,",
+				"          {updated votes}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 rank(desc(Votes, true),",
+				"     output(rank as long)) ~> ranking",
+				"ranking sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> finalflatfile"
+			]
+		}
+	}
+}

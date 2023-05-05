@@ -1,0 +1,20 @@
+{
+	"name": "AzureSqlTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase11",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "EXE 6"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "zomatodata2"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
