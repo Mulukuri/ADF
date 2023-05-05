@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adftraining123456789"
+		},
+		"AzureDataLakeSQL_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"AzureSqlDatabase11_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
+		"linked_service for the blob_connectionString": {
+			"value": ""
+		},
+		"linked_service_adl_accountKey": {
+			"value": ""
+		},
+		"linked_service_sql_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeSQL_properties_typeProperties_url": {
+			"value": "https://datalakeadftraining.dfs.core.windows.net/"
+		},
+		"linked_service_adl_properties_typeProperties_url": {
+			"value": "https://datalakeadftraining.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
