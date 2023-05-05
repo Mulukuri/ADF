@@ -47,7 +47,7 @@
 			"type": "string",
 			"defaultValue": "https://datalakeadftraining.dfs.core.windows.net/"
 		},
-		"trigger1_properties_pipeline8_parameters_temp_arry": {
+		"schedule trigger_properties_pipeline8_parameters_temp_arry": {
 			"type": "array",
 			"defaultValue": [
 				1,
@@ -136,8 +136,8 @@
 					"SqlServer1_connectionString": {
 						"value": "[parameters('SqlServer1_connectionString')]"
 					},
-					"trigger1_properties_pipeline8_parameters_temp_arry": {
-						"value": "[parameters('trigger1_properties_pipeline8_parameters_temp_arry')]"
+					"schedule trigger_properties_pipeline8_parameters_temp_arry": {
+						"value": "[parameters('schedule trigger_properties_pipeline8_parameters_temp_arry')]"
 					}
 				}
 			},
