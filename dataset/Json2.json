@@ -1,0 +1,40 @@
+{
+	"name": "Json2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linked_service_adl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "output"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Age": {
+					"type": "string"
+				},
+				"Sex": {
+					"type": "string"
+				},
+				"BP": {
+					"type": "string"
+				},
+				"Cholesterol": {
+					"type": "string"
+				},
+				"NAK": {
+					"type": "string"
+				},
+				"Drug": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

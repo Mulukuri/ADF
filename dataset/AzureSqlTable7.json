@@ -1,0 +1,57 @@
+{
+	"name": "AzureSqlTable7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase11",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "age",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sex",
+				"type": "varchar"
+			},
+			{
+				"name": "bmi",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "children",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "smoker",
+				"type": "varchar"
+			},
+			{
+				"name": "region",
+				"type": "varchar"
+			},
+			{
+				"name": "charges",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "pdataset().table",
+				"type": "Expression"
+			}
+		}
+	}
+}
