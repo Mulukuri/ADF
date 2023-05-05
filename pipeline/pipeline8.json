@@ -13,7 +13,27 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@greater(item(),7)",
+						"value": "@greater(item(),3)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "output",
+					"value": {
+						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					}
 				}
@@ -22,7 +42,22 @@
 		"parameters": {
 			"temp_arry": {
 				"type": "array",
-				"defaultValue": "(1,2,3,4,5,6,7,8,9)"
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9
+				]
+			}
+		},
+		"variables": {
+			"output": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
