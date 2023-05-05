@@ -46,6 +46,20 @@
 		"linked_service_adl_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datalakeadftraining.dfs.core.windows.net/"
+		},
+		"trigger1_properties_pipeline8_parameters_temp_arry": {
+			"type": "array",
+			"defaultValue": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			]
 		}
 	},
 	"variables": {
@@ -1589,18 +1603,41 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [],
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline8",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"temp_arry": "[parameters('trigger1_properties_pipeline8_parameters_temp_arry')]"
+						}
+					}
+				],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Minute",
-						"interval": 16,
+						"frequency": "Week",
+						"interval": 1,
 						"startTime": "2023-05-05T02:15:00",
-						"timeZone": "India Standard Time"
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								19
+							],
+							"hours": [
+								14
+							],
+							"weekDays": [
+								"Friday"
+							]
+						}
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline8')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime')]",
